@@ -1,4 +1,8 @@
-# Default Dashboard
+# Home Assistant Dashboard Default
+
+## dash-ing default
+
+### Because, why isn't this a default feature?
 
 Automatically redirect to your preferred dashboard when opening Home Assistant!
 
@@ -13,7 +17,7 @@ Automatically redirect to your preferred dashboard when opening Home Assistant!
 
 * 🎯 Automatically redirect to your chosen dashboard when accessing Home Assistant
 * 🔄 Change your default dashboard anytime via a dropdown helper
-* 👥 Works per-device (each device remembers its own preference)
+* 👥 Updates all devices to default to the same dashboard
 * 🏠 Auto-creates helper entities for easy configuration
 * ⚡ No manual YAML configuration required
 
@@ -24,13 +28,12 @@ Automatically redirect to your preferred dashboard when opening Home Assistant!
 ### Step 1: Install via HACS
 
 1. Open HACS in your Home Assistant instance
-2. Click on "Frontend" section
-3. Click the three dots menu (top right) and select "Custom repositories"
-4. Add this repository URL: `https://github.com/shinypancake/default-dashboard`
-5. Select category: "Dashboard"
-6. Click "Add"
-7. Find "Default Dashboard" in the list and click "Install"
-8. Click "Install" again in the popup window
+2. Click the three dots menu (top right) and select "Custom repositories"
+3. Add this repository URL: `https://github.com/shinypancake/dashing-default`
+4. Select category: "Dashboard"
+5. Click "Add"
+6. Search "Dashing Default". Choose it
+7. Click "Install"
 
 ### Step 2: Add as a Lovelace Resource
 
@@ -45,19 +48,20 @@ Automatically redirect to your preferred dashboard when opening Home Assistant!
 1. **Clear your browser cache** (Important!)
 2. Navigate to your Home Assistant homepage (`/`)
 3. The integration will automatically create two helper entities:
-   - `input_select.default_dashboard` (Dropdown helper)
-   - `input_boolean.default_dashboard` (Toggle helper)
+   * `input_select.default_dashboard` (Dropdown helper)
+   * `input_boolean.default_dashboard` (Toggle helper)
 4. You'll see console messages confirming the helpers were created
 
 ### Step 4: Configure Your Default Dashboard
 
 1. Go to Settings → Devices & Services → Helpers
-2. Find the "Default Dashboard" dropdown helper
+2. Find the "Default Dashboard" dropdown helper (`input_select.default_dashboard`)
 3. If it shows "refresh" as the selected option, select it once to populate all available dashboards
-4. Reload the page (F5)
+4. Reload the page (F5) and go back to the dropdown helper
 5. Select your preferred dashboard from the dropdown
-6. Enable the "Default Dashboard" toggle helper
+6. Ensure the "Default Dashboard" toggle helper (`input_boolean.default_dashboard`) is on
 7. Reload your Home Assistant homepage - it will now redirect to your chosen dashboard!
+   * If you are asked to log in when refreshing, you will be re-directed to log in a second time. Check `Keep Me Logged In` to avoid this
 
 ---
 
@@ -66,28 +70,23 @@ Automatically redirect to your preferred dashboard when opening Home Assistant!
 ### Changing Your Default Dashboard
 
 1. Go to Settings → Devices & Services → Helpers
-2. Find "Default Dashboard" dropdown
+2. Find "Default Dashboard" dropdown (`input_select.default_dashboard`)
 3. Select your preferred dashboard
-4. The change will take effect on the next page reload
+4. The change will take effect on the next home page reload
 
 ### Disabling the Redirect
 
 1. Go to Settings → Devices & Services → Helpers
 2. Find "Default Dashboard" toggle
-3. Turn it OFF
-4. The redirect will be disabled immediately
-
-### Per-Device Settings
-
-Each device/browser stores its own preference locally. To set different defaults on different devices:
-
-1. On each device, navigate to the Home Assistant homepage
-2. Select the preferred dashboard for that device in the dropdown helper
-3. The preference is saved in that browser's local storage
+3. Turn it off
 
 ---
 
 ## Troubleshooting
+
+### Double Login Required
+
+This is a known problem with the current implementation. The redirect happens after Home Assistant loads, which may require re-authentication. There is currently no solution or workaround
 
 ### Helpers Not Created Automatically
 
@@ -96,7 +95,7 @@ If the helper entities aren't created automatically:
 1. Check the browser console (F12) for error messages
 2. Ensure you have admin privileges in Home Assistant
 3. Try manually creating the helpers:
-   - **Dropdown Helper**: Entity ID must be `input_select.default_dashboard` with at least one option (e.g., "refresh")
+   - **Dropdown Helper**: Entity ID must be `input_select.default_dashboard` with one option initially (e.g., "refresh")
    - **Toggle Helper**: Entity ID must be `input_boolean.default_dashboard`
 
 ### Dashboard Not Redirecting
@@ -105,18 +104,6 @@ If the helper entities aren't created automatically:
 2. Clear your browser cache
 3. Check that the selected dashboard exists and you have access to it
 4. Open browser console (F12) and look for "DEFAULT-DASHBOARD" messages
-
-### Double Login Required
-
-This is a known issue with the current implementation. The redirect happens after Home Assistant loads, which may require re-authentication. We're working on a fix.
-
-### Setting Different Defaults Per Device
-
-You can override the default on a specific device:
-1. Load the home page first (this loads the module)
-2. Navigate to Settings → Dashboards
-3. Click "SET AS DEFAULT ON THIS DEVICE" for your preferred dashboard
-4. This device will now use its own default instead of the global setting
 
 ### Resetting to Default Behavior
 
@@ -129,6 +116,7 @@ You can override the default on a specific device:
 ## How It Works
 
 This integration works by:
+
 1. Creating two helper entities to store your preferences
 2. Loading a JavaScript module with your Home Assistant frontend
 3. Checking your preference when you navigate to the root URL (`/`)
@@ -145,10 +133,10 @@ Original project by [@daredoes](https://www.github.com/daredoes)
 
 ---
 
-[commits-shield]: https://img.shields.io/github/commit-activity/y/daredoes/default-dashboard.svg
-[commits]: https://github.com/daredoes/default-dashboard/commits/master
+[commits-shield]: https://img.shields.io/github/commit-activity/y/shinypancake/default-dashboard.svg
+[commits]: https://github.com/shinypancake/default-dashboard/commits/master
 [devcontainer]: https://code.visualstudio.com/docs/remote/containers
-[license-shield]: https://img.shields.io/github/license/daredoes/default-dashboard.svg
+[license-shield]: https://img.shields.io/github/license/shinypancake/default-dashboard.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2025
-[releases-shield]: https://img.shields.io/github/release/daredoes/default-dashboard.svg
-[releases]: https://github.com/daredoes/default-dashboard/releases
+[releases-shield]: https://img.shields.io/github/release/shinypancake/default-dashboard.svg
+[releases]: https://github.com/shinypancake/default-dashboard/releases
