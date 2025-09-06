@@ -53,6 +53,6 @@ Video Tutorial: https://www.youtube.com/watch?v=-tBVT99Ihpk
 [commits]: https://github.com/daredoes/default-dashboard/commits/master
 [devcontainer]: https://code.visualstudio.com/docs/remote/containers
 [license-shield]: https://img.shields.io/github/license/daredoes/default-dashboard.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2022
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2025
 [releases-shield]: https://img.shields.io/github/release/daredoes/default-dashboard.svg
 [releases]: https://github.com/daredoes/default-dashboard/releases

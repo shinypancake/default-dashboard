@@ -71,20 +71,39 @@ const enableIfNull = async () => {
   return false;
 };
 
-// Gets the helper entities needed for Default Dashboard, and throws log messages if they are missing
-const getUrlAndToggle = (hass: HomeAssistant) => {
-  const url = hass.states[DEFAULT_DASHBOARD_DROPDOWN]?.state;
-  const enabled = hass.states[DEFAULT_DASHBOARD_TOGGLE]?.state;
-  if (url === undefined || enabled === undefined) {
-    if (url === undefined) {
-      controller.createInputSelect();
+// Gets the helper entities needed for Default Dashboard, and creates them if missing
+const getUrlAndToggle = async (hass: HomeAssistant) => {
+  let url = hass.states[DEFAULT_DASHBOARD_DROPDOWN]?.state;
+  let enabled = hass.states[DEFAULT_DASHBOARD_TOGGLE]?.state;
+  
+  if (url === undefined) {
+    try {
+      await controller.createInputSelect();
       log(`Created a Dropdown helper with the id \`${DEFAULT_DASHBOARD_DROPDOWN}\``);
-    }
-    if (enabled === undefined) {
-      controller.createInputBoolean();
-      log(`Created a Toggle helper with the id \`${DEFAULT_DASHBOARD_TOGGLE}\``);
+      // Wait a moment for the entity to be registered
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Refresh hass states
+      url = hass.states[DEFAULT_DASHBOARD_DROPDOWN]?.state;
+    } catch (e) {
+      // Entity might already exist, just not loaded yet
+      log(`Could not create dropdown helper: ${e}`);
     }
   }
+  
+  if (enabled === undefined) {
+    try {
+      await controller.createInputBoolean();
+      log(`Created a Toggle helper with the id \`${DEFAULT_DASHBOARD_TOGGLE}\``);
+      // Wait a moment for the entity to be registered
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Refresh hass states
+      enabled = hass.states[DEFAULT_DASHBOARD_TOGGLE]?.state;
+    } catch (e) {
+      // Entity might already exist, just not loaded yet
+      log(`Could not create toggle helper: ${e}`);
+    }
+  }
+  
   return { url, enabled: enabled === 'on' };
 };
 
@@ -106,7 +125,7 @@ const setDefaultDashboard = async (url: string) => {
   const disabled = settings.isDefaultPanelManaged === 'false' || settings.isDefaultPanelManaged === null;
   const urls = await getUrlsHash();
   if (!disabled) {
-    if (urls[url]) {
+    if (urls[url] || url === OVERVIEW_OPTION) {
       if (settings.defaultPanel !== managedPanel) {
         log(`Setting default panel to ${managedPanel}`);
         await controller.setDefaultPanel(managedPanel);
@@ -127,12 +146,20 @@ const setDefaultDashboard = async (url: string) => {
 
   // First, we get our hass object from the page.
   const hass = getHass();
+  
+  // Wait for entities to be loaded (especially after restart)
+  let retries = 0;
+  while ((!hass.states || Object.keys(hass.states).length === 0) && retries < 30) {
+    await new Promise((resolve) => window.setTimeout(resolve, 1000));
+    retries++;
+  }
+  
   // Second, we pass it into our controller instance
   controller = new Controller(hass);
   // Third, we set up our listener for when the "set default dashboard on this device" button is used
   addDefaultDashboardListener();
   // Fourth, we get the url and toggle status of our helpers
-  const { url: my_lovelace_url, enabled: default_dashboard_enabled } = getUrlAndToggle(hass);
+  const { url: my_lovelace_url, enabled: default_dashboard_enabled } = await getUrlAndToggle(hass);
   // Fifth, we confirm we have a url
   if (my_lovelace_url) {
     // Sixth, we see if that URL is refresh, and if it is we refresh our input select's options.
