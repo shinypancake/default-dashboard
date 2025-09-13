@@ -29,7 +29,7 @@ Automatically redirect to your preferred dashboard when opening Home Assistant!
 
 1. Open HACS in your Home Assistant instance
 2. Click the three dots menu (top right) and select "Custom repositories"
-3. Add this repository URL: `https://github.com/shinypancake/dashing-default`
+3. Add this repository URL: `https://github.com/shinypancake/dash-ing-default`
 4. Select category: "Dashboard"
 5. Click "Add"
 6. Search "Dashing Default". Choose it
@@ -39,7 +39,7 @@ Automatically redirect to your preferred dashboard when opening Home Assistant!
 
 1. Go to Settings → Dashboards → Resources tab (top right three dots menu)
 2. Click "Add Resource"
-3. Enter URL: `/hacsfiles/default-dashboard/default-dashboard.js`
+3. Enter URL: `/hacsfiles/dash-ing-default/default-dashboard.js`
 4. Select Resource type: `JavaScript Module`
 5. Click "Create"
 
@@ -127,16 +127,16 @@ This integration works by:
 
 ## Support
 
-For issues, feature requests, or questions, please open an issue on [GitHub](https://github.com/shinypancake/default-dashboard/issues).
+For issues, feature requests, or questions, please open an issue on [GitHub](https://github.com/shinypancake/dash-ing-default/issues).
 
 Original project by [@daredoes](https://www.github.com/daredoes)
 
 ---
 
-[commits-shield]: https://img.shields.io/github/commit-activity/y/shinypancake/default-dashboard.svg
-[commits]: https://github.com/shinypancake/default-dashboard/commits/master
+[commits-shield]: https://img.shields.io/github/commit-activity/y/shinypancake/dash-ing-default.svg
+[commits]: https://github.com/shinypancake/dash-ing-default/commits/master
 [devcontainer]: https://code.visualstudio.com/docs/remote/containers
-[license-shield]: https://img.shields.io/github/license/shinypancake/default-dashboard.svg
+[license-shield]: https://img.shields.io/github/license/shinypancake/dash-ing-default.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2025
-[releases-shield]: https://img.shields.io/github/release/shinypancake/default-dashboard.svg
-[releases]: https://github.com/shinypancake/default-dashboard/releases
+[releases-shield]: https://img.shields.io/github/release/shinypancake/dash-ing-default.svg
+[releases]: https://github.com/shinypancake/dash-ing-default/releases
